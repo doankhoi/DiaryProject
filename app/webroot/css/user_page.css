@@ -1,0 +1,18 @@
+body{
+    padding: 0;
+    margin: 0;
+}
+
+.wapper{
+    width: 100%;
+}
+
+.container-fluid .wapper .title{
+    background-color: #ccccff;
+}
+
+.avatar img{
+    width: 3.5em;
+    height: 3.5em;
+    display: inline;
+}
