@@ -16,3 +16,34 @@ body{
     height: 3.5em;
     display: inline;
 }
+
+.navbar-brand{
+    font-size: 3em;
+    font-weight: bold;
+}
+
+.navbar .navbar-inverse{
+    position: fixed;
+}
+
+.recent{
+    overflow: auto;
+    height: 300px;
+}
+
+.recent img{
+   width: 5em;
+   height: 5em;
+}
+
+.title_nav_left{
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #006687;
+    margin-top: 1em;
+}
+
+.item_write{
+    background-color: #dddddd;
+    margin-top: 1em;
+}
