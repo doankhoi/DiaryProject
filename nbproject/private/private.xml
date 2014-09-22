@@ -3,9 +3,6 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/DiaryProject/app/webroot/css/bootstrap.min.css</file>
-            <file>file:/C:/xampp/htdocs/DiaryProject/app/webroot/css/user_page.css</file>
-            <file>file:/C:/xampp/htdocs/DiaryProject/app/View/Users/index.ctp</file>
             <file>file:/C:/xampp/htdocs/DiaryProject/app/Controller/UsersController.php</file>
             <file>file:/C:/xampp/htdocs/DiaryProject/app/View/Layouts/user_page.ctp</file>
         </group>
