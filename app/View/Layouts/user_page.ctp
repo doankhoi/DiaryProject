@@ -13,6 +13,7 @@ Trang cá nhân của người dùng sau khi đăng nhập vào hệ thống
         <?php // echo $this->Html->css('bootstrap'); ?>
         <?php echo $this->Html->css('bootstrap.min'); ?>
         <?php echo $this->Html->css('user_page'); ?>
+        <?php echo $this->Html->css('view_profile');?>
 
 
         <!-- Thêm thư viện jquery và bootstrap -->
@@ -22,18 +23,28 @@ Trang cá nhân của người dùng sau khi đăng nhập vào hệ thống
 
     </head>
     <body>
-
+        <!--Lấy thông tin về người dùng đăng nhập-->
+        <?php $userId = $this->Session->read('Auth.User');?>
+        
         <div class="container-fluid wapper">
 
             <!--Navigabar-->
-            <div class="navbar navbar-inverse">
+
+            <div class="navbar navbar-inverse navbar-fixed-top">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-inverse-collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Diary</a>
+
+                    <?php
+                    echo $this->Html->link('Diary', array(
+                        'controller' => 'users',
+                        'action' => 'index'
+                            ), array('class' => 'navbar-brand')
+                    );
+                    ?>
                 </div>
                 <div class="navbar-collapse collapse navbar-inverse-collapse">
                     <ul class="nav navbar-nav">
@@ -45,14 +56,14 @@ Trang cá nhân của người dùng sau khi đăng nhập vào hệ thống
                         <input type="text" class="form-control col-lg-8" placeholder="Tìm bài viết">
                     </form>
                     <ul class="nav navbar-nav navbar-right avatar">
-                        <li><?php echo $this->Html->image('doankhoi.jpg', array('class' => 'img-circle')); ?></li>
+                        <li><?php echo $this->Html->image($userId['Profile']['avatar'], array('class' => 'img-circle')); ?></li>
 
                         <!-- Liên kết tới trang profile của người dùng -->
                         <li>
                             <?php
-                            echo $this->Html->link('doankhoi', array(
+                            echo $this->Html->link($userId['username'], array(
                                 'controller' => 'users',
-                                'action' => 'profile',
+                                'action' => 'viewprofile',
                                     ), array(
                                 'title' => 'Profile'
                                     )
@@ -62,7 +73,15 @@ Trang cá nhân của người dùng sau khi đăng nhập vào hệ thống
                         </li>
 
                         <li><a href="#">Thông báo<span class="badge">2</span></a></li>
-                        <li><a href="#">Logout</a></li>
+
+                        <li>
+                            <?php
+                            echo $this->Html->link('Logout', array(
+                                'controller' => 'users',
+                                'action' => 'logout'
+                            ));
+                            ?>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -140,7 +159,64 @@ Trang cá nhân của người dùng sau khi đăng nhập vào hệ thống
                         <a href="#" class="navbar-right">
                             <span style="color: red" id="list_month">Xem thêm >></span>
                         </a>
-                    </div>               
+                    </div>  
+
+                    <!--Danh sách bạn bè-->
+                    <div class="row title_nav_left">
+                        Bạn bè
+                    </div>
+                    <div class="list-group friend">
+                        <a href="#" class="list-group-item item-friend">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <?php echo $this->Html->image('doankhoi.jpg', array('class' => 'icon_friend')); ?>
+                                </div>
+                                <div class="col-lg-8">
+                                    <p class="list-group-item-text item-friend-name">duccuong</p>
+                                </div>
+                                <div class="col-lg-1">
+                                    <?php echo $this->Html->image('online.jpg', array('class' => 'icon_status navbar-right')); ?>
+                                </div>
+                            </div>
+                        </a>               
+                        <a href="#" class="list-group-item item-friend">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <?php echo $this->Html->image('doankhoi.jpg', array('class' => 'icon_friend')); ?>
+                                </div>
+                                <div class="col-lg-8">
+                                    <p class="list-group-item-text item-friend-name">duccuong</p>
+                                </div>
+                                <div class="col-lg-1">
+                                    <?php echo $this->Html->image('offline.jpg', array('class' => 'icon_status navbar-right')); ?>
+                                </div>
+                            </div>
+                        </a>               
+                        <a href="#" class="list-group-item item-friend">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <?php echo $this->Html->image('doankhoi.jpg', array('class' => 'icon_friend')); ?>
+                                </div>
+                                <div class="col-lg-8">
+                                    <p class="list-group-item-text item-friend-name">duccuong</p>
+                                </div>
+                                <div class="col-lg-1">
+                                    <?php echo $this->Html->image('online.jpg', array('class' => 'icon_status navbar-right')); ?>
+                                </div>
+                            </div>
+                        </a>               
+                    </div>
+                    <!--Tìm kiếm bạn bè-->
+                    <div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Tìm bạn bè">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div><!--End tìm bạn bè-->
                 </div><!--Danh sách các bài nhật ký chia theo tháng, thể loại bài viết-->
 
 
@@ -201,9 +277,9 @@ Trang cá nhân của người dùng sau khi đăng nhập vào hệ thống
                                 </div>
                             </div>
                         </a>
-                        
+
                     </div><!--End danh sách lịch làm việc-->
-                    
+
                     <div class="row title_nav_left">
                         Recent
                     </div>               
@@ -312,25 +388,8 @@ Trang cá nhân của người dùng sau khi đăng nhập vào hệ thống
 
             </div><!--End row-->
 
-            <hr/>
-            <!-- Footer-->
-            <div class="row">
-                <div class="col-lg-3">
-                    <ul class="nav navbar-nav">
-                        <li><a href="#">Trang chủ</a></li>
-                        <li><a href="#">Profile</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-6">
-
-                </div>
-                <div class="col-lg-3">
-                    <blockquote class="pull-right">
-                        <p>Ghi lại tâm sự của bạn.</p>
-                        <small>Chia sẻ với bạn bè qua <cite title="Source Title">Diary</cite></small>
-                    </blockquote>
-                </div>
-            </div><!--End footer-->
+            <!--Footer -->
+            <?php echo $this->element('footer'); ?>
         </div><!--End wrapper-->
 
     </body>

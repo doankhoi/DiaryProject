@@ -26,7 +26,7 @@ body{
     position: fixed;
 }
 
-.recent{
+.recent, .friend{
     overflow: auto;
     height: 300px;
 }
@@ -46,4 +46,22 @@ body{
 .item_write{
     background-color: #dddddd;
     margin-top: 1em;
+}
+
+.friend .icon_friend{
+    width: 3em;
+    height: 3em;
+}
+
+.item-friend{
+    height: 4em;
+}
+
+.item-friend-name{
+    font-weight: bold;
+}
+
+.friend .icon_status{
+    width: 1em;
+    height: 1em;
 }

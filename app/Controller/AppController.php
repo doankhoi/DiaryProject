@@ -31,4 +31,17 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+    public $components = array('Session', 'Auth');
+    public $helpers = array('Session');
+    
+    public function beforeFilter() {
+        Security::setHash('md5');
+        $this->Auth->loginAction = array('controller' => 'Users', 'action' => 'login');
+        $this->Auth->loginRedirect = array('controller' => 'Users', 'action' => 'index');
+        $this->Auth->logoutRedirect = array('controller' => 'Users', 'action' => 'login');
+        $this->Auth->loginError ='Vui lòng nhập đúng tài khoản và mật khẩu';
+        $this->Auth->authError='Bạn chưa đăng nhập';
+        $this->Auth->allow('register','sendpassword','updatepassword');
+    }
+
 }
