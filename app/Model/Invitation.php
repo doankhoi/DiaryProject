@@ -11,6 +11,17 @@
  *
  * @author doankhoi
  */
-class Invitation {
-    //put your code here
+class Invitation extends AppModel{
+    var $name = "Invitation";
+    
+    var $belongsTo = array(
+        'User'=> array(
+            'className'=>'User',
+            'foreignKey'=>'users_id'
+        ),
+        'Article'=> array(
+            'className'=>'Article',
+            'foreignKey'=>'articles_id'
+        )
+    );
 }

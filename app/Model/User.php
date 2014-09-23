@@ -14,11 +14,18 @@
 class User extends AppModel{
     var $name = "User";
     var $hasOne = array('Profile'=> array('className'=>'Profile', 'foreignKey'=>'users_id'));
-    var $hasMany = array('FriendsUser'=> array(
-        'className'=>'FriendsUser',
-        'foreignKey'=>'users_id',
-        'condition'=> array('FriendsUser.users_id'=>'User.id')
-    ));
+    var $hasMany = array(
+        'FriendsUser'=> array(
+            'className'=>'FriendsUser',
+            'foreignKey'=>'users_id',
+            'condition'=> array('FriendsUser.users_id'=>'User.id')
+        ),
+        'Invitation'=> array(
+            'className'=>'Invitation',
+            'foreignKey'=>'users_id',
+            'condition'=> array('Invitation.users_id'=> 'User.id')
+        )
+    );
     
     var $validate = array(
         'username' => array(

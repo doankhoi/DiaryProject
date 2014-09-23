@@ -5,7 +5,7 @@ Trang cá nhân của người dùng sau khi đăng nhập vào hệ thống
 -->
 <html>
     <head>
-        <title>Trang chủ</title>
+        <title><?php echo $title_for_layout; ?></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -13,19 +13,24 @@ Trang cá nhân của người dùng sau khi đăng nhập vào hệ thống
         <?php // echo $this->Html->css('bootstrap'); ?>
         <?php echo $this->Html->css('bootstrap.min'); ?>
         <?php echo $this->Html->css('user_page'); ?>
-        <?php echo $this->Html->css('view_profile');?>
+        <?php echo $this->Html->css('view_profile'); ?>
 
 
         <!-- Thêm thư viện jquery và bootstrap -->
         <?php echo $this->Html->script('jquery-2.1.1.min'); ?>
         <?php echo $this->Html->script('bootstrap.min'); ?>
+        <!-- Chèn javascipt-->
+        <?php echo $this->Html->script('viewprofile'); ?>
 
+        <?php echo $this->Js->writeBuffer(array('cache' => true)); ?>
 
     </head>
     <body>
         <!--Lấy thông tin về người dùng đăng nhập-->
-        <?php $userId = $this->Session->read('Auth.User');?>
-        
+        <?php
+        $userId = $this->Session->read('Auth.User');
+        ?>
+
         <div class="container-fluid wapper">
 
             <!--Navigabar-->
@@ -72,7 +77,9 @@ Trang cá nhân của người dùng sau khi đăng nhập vào hệ thống
 
                         </li>
 
-                        <li><a href="#">Thông báo<span class="badge">2</span></a></li>
+                        <li>
+                            <a href="#">Thông báo<span class="badge">2</span></a>
+                        </li>
 
                         <li>
                             <?php
@@ -389,7 +396,9 @@ Trang cá nhân của người dùng sau khi đăng nhập vào hệ thống
             </div><!--End row-->
 
             <!--Footer -->
-            <?php echo $this->element('footer'); ?>
+            <?php
+            echo $this->element('footer');
+            ?>
         </div><!--End wrapper-->
 
     </body>

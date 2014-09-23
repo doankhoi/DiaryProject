@@ -11,6 +11,12 @@
  *
  * @author doankhoi
  */
-class Article {
-    //put your code here
+class Article extends AppModel{
+   var $name = "Article";
+   var $hasMany = array(
+       'Invitation'=> array(
+           'className'=>'Invitation',
+           'foreignKey'=>'Invitation.articles_id'
+       )
+   );
 }

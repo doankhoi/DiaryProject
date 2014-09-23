@@ -9,11 +9,11 @@
         <div class="col-lg-3 label_profile">
             Username
         </div>
-        <div class="col-lg-8">
+        <div id="username" class="col-lg-8">
             <?php echo $user['username']; ?>
         </div>
         <div class="col-lg-1">
-            <button title="Chỉnh sửa"><span class="glyphicon glyphicon-edit"></span></button>
+            <button id="bt_username" title="Chỉnh sửa"><span class="glyphicon glyphicon-edit"></span></button>
         </div>
     </div>
     <div class="row item_profile">
@@ -24,7 +24,7 @@
 
         </div>
         <div class="col-lg-1">
-            <button title="Chỉnh sửa"><span class="glyphicon glyphicon-edit"></span></button>
+            <button style="display: none" title="Chỉnh sửa"><span class="glyphicon glyphicon-edit"></span></button>
         </div>
     </div>
     <div class="row item_profile">
@@ -35,7 +35,7 @@
             <?php echo $this->Html->image($user['Profile']['avatar'], array('class' => 'icon_avatar', 'title' => 'Ảnh đại diện')); ?>
         </div>
         <div class="col-lg-1">
-            <button title="Chỉnh sửa"><span class="glyphicon glyphicon-edit"></span></button>
+            <button style="display: none" title="Chỉnh sửa"><span class="glyphicon glyphicon-edit"></span></button>
         </div>
     </div>
 
@@ -47,7 +47,7 @@
             <?php echo $user['Profile']['name']; ?>
         </div>
         <div class="col-lg-1">
-            <button title="Chỉnh sửa"><span class="glyphicon glyphicon-edit"></span></button>
+            <button style="display: none" title="Chỉnh sửa"><span class="glyphicon glyphicon-edit"></span></button>
         </div>
     </div>
 
@@ -59,7 +59,7 @@
             <?php echo $user['email']; ?>
         </div>
         <div class="col-lg-1">
-            <button title="Chỉnh sửa"><span class="glyphicon glyphicon-edit"></span></button>
+            <button style="display: none" title="Chỉnh sửa"><span class="glyphicon glyphicon-edit"></span></button>
         </div>
     </div>
 
@@ -77,7 +77,7 @@
             ?>
         </div>
         <div class="col-lg-1">
-            <button title="Chỉnh sửa"><span class="glyphicon glyphicon-edit"></span></button>
+            <button style="display: none" title="Chỉnh sửa"><span class="glyphicon glyphicon-edit"></span></button>
         </div>
     </div>
 
@@ -89,7 +89,7 @@
             <?php echo $user['Profile']['phone']; ?>
         </div>
         <div class="col-lg-1">
-            <button title="Chỉnh sửa"><span class="glyphicon glyphicon-edit"></span></button>
+            <button style="display: none" title="Chỉnh sửa"><span class="glyphicon glyphicon-edit"></span></button>
         </div>
     </div>
 
@@ -101,7 +101,7 @@
             <?php echo $user['Profile']['sex']; ?>
         </div>
         <div class="col-lg-1">
-            <button title="Chỉnh sửa"><span class="glyphicon glyphicon-edit"></span></button>
+            <button style="display: none" title="Chỉnh sửa"><span class="glyphicon glyphicon-edit"></span></button>
         </div>
     </div>
     <div class="row item_profile">
@@ -112,7 +112,7 @@
             <?php echo $user['Profile']['birthday']; ?>
         </div>
         <div class="col-lg-1">
-            <button title="Chỉnh sửa"><span class="glyphicon glyphicon-edit"></span></button>
+            <button style="display: none" title="Chỉnh sửa"><span class="glyphicon glyphicon-edit"></span></button>
         </div>
     </div>
     <div class="row item_profile">
@@ -129,7 +129,7 @@
             ?>
         </div>
         <div class="col-lg-1">
-            <button title="Chỉnh sửa"><span class="glyphicon glyphicon-edit"></span></button>
+            <button style="display: none" title="Chỉnh sửa"><span class="glyphicon glyphicon-edit"></span></button>
         </div>
     </div>
     <div class="row item_profile">
@@ -146,7 +146,7 @@
             ?>
         </div>
         <div class="col-lg-1">
-            <button title="Chỉnh sửa"><span class="glyphicon glyphicon-edit"></span></button>
+            <button style="display: none" title="Chỉnh sửa"><span class="glyphicon glyphicon-edit"></span></button>
         </div>
     </div>
 

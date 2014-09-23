@@ -7,12 +7,17 @@
  */
 
 /**
- * Description of FriendUser
+ * Description of FriendsUser
  *
  * @author doankhoi
  */
-class FriendUser extends AppModel{
+class FriendsUser extends AppModel{
 
-    var $name = "FriendUser";
-    var $belongsTo = array('User'=> array('className'=>'User', 'foreignKey'=>'users_id'));
+    var $name = "FriendsUser";
+    var $belongsTo = array(
+        'User'=> array(
+            'className'=>'User', 
+            'foreignKey'=>'users_id'
+        )
+    );
 }

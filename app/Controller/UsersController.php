@@ -16,7 +16,7 @@ App::uses('CakeEmail', 'Network/Email');
 class UsersController extends AppController {
 
     var $name = "Users";
-    public $uses = array('Profile', 'User');
+    public $uses = array('Profile', 'User', 'Invitation');
 
     public function beforeFilter() {
         parent::beforeFilter();
@@ -153,7 +153,7 @@ class UsersController extends AppController {
 
     public function viewprofile() {
         $this->layout = "user_page";
-        
+        $this->set('title_for_layout', 'Thông tin cá nhân');
     }
 
     public function updateprofile() {
@@ -194,7 +194,6 @@ class UsersController extends AppController {
         $this->set('title_for_layout', 'Trang chủ');
         $this->layout = "user_page";
         
-//        $this->set('userId', $user);
     }
 
     public function profile($id) {
