@@ -24,6 +24,11 @@ class User extends AppModel{
             'className'=>'Invitation',
             'foreignKey'=>'users_id',
             'condition'=> array('Invitation.users_id'=> 'User.id')
+        ),
+        'Comment'=> array(
+            'className'=>'Comment',
+            'foreignKey'=>'users_id',
+            'condition'=>array('Comment.users_id'=>'User.id')
         )
     );
     

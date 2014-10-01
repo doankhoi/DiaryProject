@@ -8,10 +8,21 @@
         <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
     </a>
     <div>
-        <div>
-            <a href="#" class="btn btn-default btn-xs" title="Thích">
-                <span class="glyphicon glyphicon-thumbs-up"></span>
-            </a>
+        <div>          
+            <?php 
+                echo $this->Html->link(
+                        $this->Html->tag('span','', array('class'=>'glyphicon glyphicon-thumbs-up')),
+                        array(
+                            'controller'=>'users',
+                            'action'=>'index'
+                            ),
+                        array(
+                            'class'=>'btn btn-default btn-xs',
+                            'title'=>'Thích',
+                            'escape' => false
+                        )
+                      );
+            ?>
             <a href="#" class="btn btn-default btn-xs" title="Bình luận">
                 <span class="glyphicon glyphicon-comment"></span>
             </a>

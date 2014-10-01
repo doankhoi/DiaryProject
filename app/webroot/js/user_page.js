@@ -3,5 +3,8 @@
  */
 
 $(function(){
-   $("[data-toggle=tooltip]").tooltip();
+    //Người dùng click vào thông báo trên navibar
+   $("#showmessage").click(function(){
+       
+   });
 });

@@ -17,6 +17,10 @@ class Article extends AppModel{
        'Invitation'=> array(
            'className'=>'Invitation',
            'foreignKey'=>'Invitation.articles_id'
+       ),
+       'Comment'=>array(
+           'className'=>'Comment',
+           'foreignKey'=>'Comment.articles_id'
        )
    );
 }

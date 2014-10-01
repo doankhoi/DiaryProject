@@ -11,6 +11,18 @@
  *
  * @author doankhoi
  */
-class Comment {
-    //put your code here
+class Comment extends AppModel {
+
+    var $name = "Comment";
+    var $belongTo = array(
+        'User' => array(
+            'className' => 'User',
+            'foreignKey' => 'users_id'
+        ),
+        'Article'=> array(
+            'className'=>'Article',
+            'foreignKey'=>'articles_id'
+        )
+    );
+
 }

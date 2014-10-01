@@ -19,8 +19,10 @@ Trang cá nhân của người dùng sau khi đăng nhập vào hệ thống
         <!-- Thêm thư viện jquery và bootstrap -->
         <?php echo $this->Html->script('jquery-2.1.1.min'); ?>
         <?php echo $this->Html->script('bootstrap.min'); ?>
+
         <!-- Chèn javascipt-->
         <?php echo $this->Html->script('viewprofile'); ?>
+        <?php echo $this->Html->script('user_page'); ?>
 
         <?php echo $this->Js->writeBuffer(array('cache' => true)); ?>
 
@@ -29,6 +31,7 @@ Trang cá nhân của người dùng sau khi đăng nhập vào hệ thống
         <!--Lấy thông tin về người dùng đăng nhập-->
         <?php
         $userId = $this->Session->read('Auth.User');
+        //Lấy thông tin các
         ?>
 
         <div class="container-fluid wapper">
@@ -77,8 +80,23 @@ Trang cá nhân của người dùng sau khi đăng nhập vào hệ thống
 
                         </li>
 
-                        <li>
-                            <a href="#">Thông báo<span class="badge">2</span></a>
+                        <li>                         
+                            <?php
+                            //Lấy số thông báo với người dùng hiện tại
+                            $num_invitation = $this->requestAction(array('controller' => 'Invitations', 'action' => 'countInvitation'));
+
+                            echo $this->Html->link(
+                                    'Thông báo' . $this->Html->tag('span', ($num_invitation <= 0)? '': $num_invitation, array('class' => 'badge')), 
+                                    array(
+                                        'controller' => 'invitations',
+                                        'action' => 'getInvitation'
+                                    ), 
+                                    array(
+                                        'id'=>'showmessage',
+                                        'escape' => false
+                                    )
+                            );
+                            ?>
                         </li>
 
                         <li>

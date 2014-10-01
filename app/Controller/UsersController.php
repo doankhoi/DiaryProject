@@ -193,7 +193,6 @@ class UsersController extends AppController {
     public function index() {
         $this->set('title_for_layout', 'Trang chủ');
         $this->layout = "user_page";
-        
     }
 
     public function profile($id) {
@@ -202,6 +201,59 @@ class UsersController extends AppController {
 
     public function user_error() {
         $this->layout = "user_page";
+    }
+
+    //Hàm xử lý thay đổi ảnh avatar
+    public function post_file() {
+
+        $this->autoRender = false;
+        $this->request->onlyAllow('ajax');
+        
+        function get_extension($file_name) {
+            $ext = explode('.', $file_name);
+            $ext = array_pop($ext);
+            return strtolower($ext);
+        }
+
+        // Helper functions
+        function exit_status($str, $code) {
+            echo json_encode(array('status' => $str, 'code'=>$code));
+            exit;
+        }
+
+        $demo_mode = false;
+        $upload_dir = WWW_ROOT . 'img\\';
+        $allowed_ext = array('jpg', 'jpeg', 'png', 'gif');
+
+        if (strtolower($_SERVER['REQUEST_METHOD']) != 'post') {
+            exit_status('Lỗi! Bạn không tải được file', 1);
+        }
+
+        if (array_key_exists('pic', $_FILES)) {
+
+            $pic = $_FILES['pic'];
+
+            if (!in_array(get_extension($pic['name']), $allowed_ext)) {
+                exit_status('Chỉ cho phép định dạng file ' . implode(',', $allowed_ext), 1);
+            }
+
+            if (move_uploaded_file($pic['tmp_name'], $upload_dir . $pic['name'])) {
+//                //Cập nhật vào cơ sở dữ liệu
+                             
+                $this->Profile->updateAll(
+                        array(
+                            'Profile.avatar' =>"'".$pic['name']."'"
+                            ),
+                        array(
+                            'Profile.users_id'=>$this->Auth->user('id')
+                        )
+                );
+                
+                exit_status("Thay đổi thành công!", 0);
+            }
+        }
+
+        exit_status('Tải file có lỗi!', 1);
     }
 
 }

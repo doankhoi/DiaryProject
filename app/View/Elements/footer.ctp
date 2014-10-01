@@ -4,8 +4,8 @@
 <div class="row">
     <div class="col-lg-3">
         <ul class="nav navbar-nav">
-            <li><a href="#">Trang chủ</a></li>
-            <li><a href="#">Profile</a></li>
+            <li><?php echo $this->Html->link('Trang chủ', array('controller'=>'users', 'action'=>'index'));?></li>
+            <li><?php echo $this->Html->link('Profile', array('controller'=>'users', 'action'=>'viewprofile'));?></li>
         </ul>
     </div>
     <div class="col-lg-6">
