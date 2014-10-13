@@ -1,3 +1,6 @@
+<?php $this->requestAction(array('controller'=>'UsersLikes', 'action'=>'getAllLikeNotRead'));?>
+
+
 <div>
     <a href="#" class="btn btn-primary btn-lg btn-block q_write">Viết gì hôm nay ?</a>
 </div>

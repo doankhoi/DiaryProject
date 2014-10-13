@@ -16,11 +16,15 @@ class Article extends AppModel{
    var $hasMany = array(
        'Invitation'=> array(
            'className'=>'Invitation',
-           'foreignKey'=>'Invitation.articles_id'
+           'foreignKey'=>'articles_id'
        ),
        'Comment'=>array(
            'className'=>'Comment',
-           'foreignKey'=>'Comment.articles_id'
+           'foreignKey'=>'articles_id'
+       ),
+       'UsersLike'=> array(
+           'className'=>'UsersLike',
+           'foreignKey'=>'articles_id'
        )
    );
 }

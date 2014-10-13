@@ -16,7 +16,7 @@ App::uses('CakeEmail', 'Network/Email');
 class UsersController extends AppController {
 
     var $name = "Users";
-    public $uses = array('Profile', 'User', 'Invitation');
+    public $uses = array('Profile', 'User', 'Invitation', 'Comment', 'UsersLike');
 
     public function beforeFilter() {
         parent::beforeFilter();
@@ -126,27 +126,31 @@ class UsersController extends AppController {
     }
 
     public function changepassword() {
+        $this->autoRender = FALSE;
+        $this->request->onlyAllow('ajax');
+
         $user = $this->User->find('first', array('conditions' => array('User.id' => $this->Auth->user('id'))));
 
         if (!$user) {
-            throw new NotFoundException('Không tồn tại User');
+            return 'Không tồn tại User';
         }
 
         if (!$this->request->data)
             $this->request->data = $user;
 
-        if ($this->request->is(array('post', 'put'))) {
 
-            $this->User->id = $this->Auth->user('id');
-            Security::setHash('md5');
-            if (md5($this->request->data['User']['password']) != $user['User']['password']) {
-                $this->Session->setFlash('Vui lòng nhập đúng mật khẩu hiện tại');
-            } else {
-                $this->request->data['User']['password'] = $this->request->data['User']['repassword'];
-                if ($this->User->save($this->request->data)) {
-                    $this->Session->setFlash('Đổi mật khẩu thành công');
-                    $this->redirect(array('action' => 'index'));
-                }
+        $this->User->id = $this->Auth->user('id');
+        Security::setHash('md5');
+        
+        if (md5($_POST['password']) != $user['User']['password']) {
+            return 'Vui lòng nhập đúng mật khẩu hiện tại';
+        } else {
+            $this->request->data['User']['password'] = $_POST['repassword'];
+            $this->request->data['User']['repassword'] = $_POST['repassword'];
+            if ($this->User->save($this->request->data)) {
+                return 'Đổi mật khẩu thành công';
+            }else{
+                return 'Mật khẩu chưa được thay đổi';
             }
         }
     }
@@ -208,7 +212,7 @@ class UsersController extends AppController {
 
         $this->autoRender = false;
         $this->request->onlyAllow('ajax');
-        
+
         function get_extension($file_name) {
             $ext = explode('.', $file_name);
             $ext = array_pop($ext);
@@ -217,7 +221,7 @@ class UsersController extends AppController {
 
         // Helper functions
         function exit_status($str, $code) {
-            echo json_encode(array('status' => $str, 'code'=>$code));
+            echo json_encode(array('status' => $str, 'code' => $code));
             exit;
         }
 
@@ -239,16 +243,15 @@ class UsersController extends AppController {
 
             if (move_uploaded_file($pic['tmp_name'], $upload_dir . $pic['name'])) {
 //                //Cập nhật vào cơ sở dữ liệu
-                             
+
                 $this->Profile->updateAll(
                         array(
-                            'Profile.avatar' =>"'".$pic['name']."'"
-                            ),
-                        array(
-                            'Profile.users_id'=>$this->Auth->user('id')
+                    'Profile.avatar' => "'" . $pic['name'] . "'"
+                        ), array(
+                    'Profile.users_id' => $this->Auth->user('id')
                         )
                 );
-                
+
                 exit_status("Thay đổi thành công!", 0);
             }
         }
@@ -256,4 +259,235 @@ class UsersController extends AppController {
         exit_status('Tải file có lỗi!', 1);
     }
 
+    /**
+     * Hàm trả về username người dùng với id
+     */
+    public function getUsername($id) {
+        $result = $this->User->find('first', array(
+            'fields' => array('User.username'),
+            'conditions' => array(
+                'User.id' => $id
+            )
+        ));
+        return $result['User']['username'];
+    }
+
+    /**
+     * Hàm cập nhật mới username
+     */
+    public function updateUsername() {
+        $this->autoRender = FALSE;
+        $this->request->onlyAllow('ajax');
+
+        $id = $this->Auth->user('id');
+        $this->User->read(null, $id);
+        $this->User->set('username', $_POST['new_username']);
+        if (!$this->User->save()) {
+            return "Không thể cập nhật cơ sở dữ liệu";
+        }
+    }
+
+    /**
+     * Hàm cập nhật avatar
+     */
+    public function updateAvatar(){
+        $this->autoRender = FALSE;
+        $this->request->onlyAllow('ajax');
+        
+        $id = $this->Auth->user('id');
+        
+        $profile = $this->Profile->find('first', array(
+           'conditions'=> array(
+               'users_id'=>$id
+           ) 
+        ));
+        
+        $path_remove = WWW_ROOT.'img\\'.$profile['Profile']['avatar'];
+        unlink($path_remove);
+        $this->Profile->read(null, $profile['Profile']['id']);
+        $this->Profile->set('avatar', $_POST['avatar']);
+        $this->Profile->save();
+        return "Thay đổi thành công";
+    }
+    
+    public function updateName(){
+        $this->autoRender = FALSE;
+        $this->request->onlyAllow('ajax');
+        
+        $id = $this->Auth->user('id');
+        $profile = $this->Profile->find('first', array(
+            'conditions'=> array(
+                'users_id'=>$id
+            )
+        ));
+        
+        $this->Profile->read(null, $profile['Profile']['id']);
+        $this->Profile->set('name', $_POST['new_name']);
+        if (!$this->Profile->save()) {
+            return "Không thể cập nhật cơ sở dữ liệu";
+        }
+    }
+    
+    public function updateEmail(){
+        $this->autoRender = FALSE;
+        $this->request->onlyAllow('ajax');
+        
+        $id = $this->Auth->user('id');
+        $profile = $this->Profile->find('first', array(
+            'conditions'=> array(
+                'users_id'=>$id
+            )
+        ));
+        
+        $this->Profile->read(null, $profile['Profile']['id']);
+        $this->Profile->set('email', $_POST['new_email']);
+        if (!$this->Profile->save()) {
+            return "Không thể cập nhật cơ sở dữ liệu";
+        }
+    }
+    
+    public function updateAddress(){
+        $this->autoRender = FALSE;
+        $this->request->onlyAllow('ajax');
+        
+        $id = $this->Auth->user('id');
+        $profile = $this->Profile->find('first', array(
+            'conditions'=> array(
+                'users_id'=>$id
+            )
+        ));
+        
+        $this->Profile->read(null, $profile['Profile']['id']);
+        $this->Profile->set('address', $_POST['new_address']);
+        if (!$this->Profile->save()) {
+            return "Không thể cập nhật cơ sở dữ liệu";
+        }
+    }
+    public function updateBirthDay(){
+        $this->autoRender = FALSE;
+        $this->request->onlyAllow('ajax');
+        
+        $id = $this->Auth->user('id');
+        $profile = $this->Profile->find('first', array(
+            'conditions'=> array(
+                'users_id'=>$id
+            )
+        ));
+        
+        $this->Profile->read(null, $profile['Profile']['id']);
+        $this->Profile->set('birthday', $_POST['new_birthday']);
+        if (!$this->Profile->save()) {
+            return "Không thể cập nhật cơ sở dữ liệu";
+        }
+    }
+    
+    public function updatePhone(){
+        $this->autoRender = FALSE;
+        $this->request->onlyAllow('ajax');
+        
+        $id = $this->Auth->user('id');
+        $profile = $this->Profile->find('first', array(
+            'conditions'=> array(
+                'users_id'=>$id
+            )
+        ));
+        
+        $this->Profile->read(null, $profile['Profile']['id']);
+        $this->Profile->set('phone', $_POST['new_phone']);
+        if (!$this->Profile->save()) {
+            return "Không thể cập nhật cơ sở dữ liệu";
+        }
+    }
+    
+    public function updateSex(){
+        $this->autoRender = FALSE;
+        $this->request->onlyAllow('ajax');
+        
+        $id = $this->Auth->user('id');
+        $profile = $this->Profile->find('first', array(
+            'conditions'=> array(
+                'users_id'=>$id
+            )
+        ));
+        
+        $this->Profile->read(null, $profile['Profile']['id']);
+        $this->Profile->set('sex', $_POST['new_sex']);
+        if (!$this->Profile->save()) {
+            return "Không thể cập nhật cơ sở dữ liệu";
+        }
+    }
+    
+    public function updateIntro(){
+        $this->autoRender = FALSE;
+        $this->request->onlyAllow('ajax');
+        
+        $id = $this->Auth->user('id');
+        $profile = $this->Profile->find('first', array(
+            'conditions'=> array(
+                'users_id'=>$id
+            )
+        ));
+        
+        $this->Profile->read(null, $profile['Profile']['id']);
+        $this->Profile->set('introducted', $_POST['new_intro']);
+        if (!$this->Profile->save()) {
+            return "Không thể cập nhật cơ sở dữ liệu";
+        }
+    }
+    
+    public function updateHobby(){
+        $this->autoRender = FALSE;
+        $this->request->onlyAllow('ajax');
+        
+        $id = $this->Auth->user('id');
+        $profile = $this->Profile->find('first', array(
+            'conditions'=> array(
+                'users_id'=>$id
+            )
+        ));
+        
+        $this->Profile->read(null, $profile['Profile']['id']);
+        $this->Profile->set('hobby', $_POST['new_hobby']);
+        if (!$this->Profile->save()) {
+            return "Không thể cập nhật cơ sở dữ liệu";
+        }
+    }
+    
+    public function updateReadComment(){
+        $this->autoRender = false;
+        $this->request->onlyAllow('ajax');
+        
+        $users_id = $_POST['users_id'];
+        $articles_id = $_POST['articles_id'];
+        
+        //Update đã đọc các comments
+        $sql = "update tb_comments set flag = 1 where users_id='".$users_id."' and articles_id='".$articles_id."'";
+        $this->Comment->query($sql);
+        return;
+    }
+    public function updateReadInvite(){
+        $this->autoRender = false;
+        $this->request->onlyAllow('ajax');
+        
+        $users_id = $_POST['users_id'];
+        $articles_id = $_POST['articles_id'];
+        
+        //Update đã đọc các comments
+        $sql = "update tb_invitations set flag = 1 where users_id='".$users_id."' and articles_id='".$articles_id."'";
+        $this->Invitation->query($sql);
+        return;
+    }
+    public function updateReadLike(){
+        $this->autoRender = false;
+        $this->request->onlyAllow('ajax');
+        
+        $users_id = $_POST['users_id'];
+        $articles_id = $_POST['articles_id'];
+        
+        //Update đã đọc các comments
+        $sql = "update tb_users_likes set flag = 1 where users_id='".$users_id."' and articles_id='".$articles_id."'";
+        $this->Invitation->query($sql);
+        return;
+    }
+    
 }

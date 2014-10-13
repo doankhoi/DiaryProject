@@ -13,7 +13,7 @@
  */
 class Profile extends AppModel{
     var $name = "Profile";
-    var $belongsTo = array('User'=> array('className'=>'User', 'foreignKey'=>'profiles_id'));
+    var $belongsTo = array('User'=> array('className'=>'User', 'foreignKey'=>'users_id'));
     
     var $validate = array(
         'name'=> array(

@@ -1,6 +1,7 @@
  <?php echo $this->Html->script('jquery.filedrop'); ?>
  <?php echo $this->Html->script('bootstrap-datepicker'); ?>
  <?php echo $this->Html->css('datepicker'); ?>
+ <?php echo $this->Html->script('viewprofile'); ?>
 
 <h3>Thông tin cá nhân</h3>
 <hr/>

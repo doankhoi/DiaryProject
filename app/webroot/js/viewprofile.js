@@ -16,6 +16,20 @@ $(function() {
                 var new_username = $(this).val().trim();
                 $("#username").empty();
                 $("#username").html(new_username);
+                //Cập nhật CSDL
+                $.ajax({
+                    type: 'POST',
+                    url: "updateUsername",
+                    dataType: 'text/html',
+                    data: {
+                        new_username: new_username
+                    },
+                    success: function(data, textStatus, jqXHR) {
+                        if (data) {
+                            alert("Không thể cập nhật username !");
+                        }
+                    }
+                });
             }
         });
     });
@@ -41,9 +55,24 @@ $(function() {
 
         $("#edit_repassword").blur(function() {
             if (flag) {
-                alert("Thay đổi password");
                 $("#password").html("********");
                 //Cập nhật password cơ sở dữ liệu
+                var p = $.trim($("#edit_password").val());
+                var rep = $.trim($("#edit_repassword").val());
+                $.ajax({
+                    type: 'POST',
+                    url: "changepassword",
+                    dataType: 'text/html',
+                    data: {
+                        password: p,
+                        repassword: rep
+                    },
+                    success: function(data, textStatus, jqXHR) {
+                        if (data) {
+                            alert(data);
+                        }
+                    }
+                });
             }
         });
     });
@@ -73,6 +102,20 @@ $(function() {
                     alert("Lỗi! Bạn không thể tải file");
                 } else {
                     $("#editavatar").html('<img src="/DiaryProject/img/' + file['name'] + '" class="icon_avatar" title="Ảnh đại diện" alt="">');
+                    //Cập nhật lại ảnh CSDL
+                    $.ajax({
+                        type: 'POST',
+                        url: "updateAvatar",
+                        dataType: 'text/html',
+                        data: {
+                            avatar: file['name']
+                        },
+                        success: function(data, textStatus, jqXHR) {
+                            if(data){
+                                alert("Thay đổi thành công");
+                            }
+                        }
+                    });
                 }
             },
             error: function(err, file) {
@@ -164,7 +207,19 @@ $(function() {
                 $("#editname").empty();
                 $("#editname").html(new_name);
                 //Cập nhật cơ sở dữ liệu
-
+                $.ajax({
+                    type: 'POST',
+                    url: "updateName",
+                    dataType: 'text/html',
+                    data: {
+                        new_name: new_name
+                    },
+                    success: function(data, textStatus, jqXHR) {
+                        if (data) {
+                            alert("Không thể cập nhật tên!");
+                        }
+                    }
+                });
             }
         });
     });
@@ -186,7 +241,19 @@ $(function() {
                 $("#editemail").empty();
                 $("#editemail").html(new_email);
                 //Cập nhật cơ sở dữ liệu
-
+                $.ajax({
+                    type: 'POST',
+                    url: "updateEmail",
+                    dataType: 'text/html',
+                    data: {
+                        new_email: new_email
+                    },
+                    success: function(data, textStatus, jqXHR) {
+                        if (data) {
+                            alert("Không thể cập nhật tên!");
+                        }
+                    }
+                });
             }
         });
     });
@@ -208,7 +275,19 @@ $(function() {
                 $("#editaddress").empty();
                 $("#editaddress").html(new_address);
                 //Cập nhật cơ sở dữ liệu
-
+                $.ajax({
+                    type: 'POST',
+                    url: "updateAddress",
+                    dataType: 'text/html',
+                    data: {
+                        new_address: new_address
+                    },
+                    success: function(data, textStatus, jqXHR) {
+                        if (data) {
+                            alert("Không thể cập nhật tên!");
+                        }
+                    }
+                });
             }
         });
     });
@@ -230,7 +309,19 @@ $(function() {
                 $("#editphone").empty();
                 $("#editphone").html(new_phone);
                 //Cập nhật cơ sở dữ liệu
-
+                $.ajax({
+                    type: 'POST',
+                    url: "updatePhone",
+                    dataType: 'text/html',
+                    data: {
+                        new_phone: new_phone
+                    },
+                    success: function(data, textStatus, jqXHR) {
+                        if (data) {
+                            alert("Không thể cập nhật tên!");
+                        }
+                    }
+                });
             }
         });
     });
@@ -251,7 +342,19 @@ $(function() {
                 $("#editsex").empty();
                 $("#editsex").html(new_sex);
                 //Cập nhật cơ sở dữ liệu
-
+                $.ajax({
+                    type: 'POST',
+                    url: "updateSex",
+                    dataType: 'text/html',
+                    data: {
+                        new_sex: new_sex
+                    },
+                    success: function(data, textStatus, jqXHR) {
+                        if (data) {
+                            alert("Không thể cập nhật tên!");
+                        }
+                    }
+                });
             }
         });
     });
@@ -273,9 +376,21 @@ $(function() {
         $("#editbirthday").html(input_birthday);
         $("#datetimepicker1").datepicker({
             format: 'yyyy-mm-dd'
-        }).on('changeDate', function() {
+        }).on('changeDate', function(ev) {
             //Cập nhật cơ sở dữ liệu
-
+            $.ajax({
+                    type: 'POST',
+                    url: "updateBirthDay",
+                    dataType: 'text/html',
+                    data: {
+                        new_birthday: $("#datetimepicker1").datepicker({dateFormat:'yyyy-mm-dd'}).val()
+                    },
+                    success: function(data, textStatus, jqXHR) {
+                        if (data) {
+                            alert("Không thể cập nhật tên!");
+                        }
+                    }
+                });
         });
     });
 
@@ -284,7 +399,7 @@ $(function() {
 
         var current_intro = $("#editintroducted").text().trim();
         $("#editintroducted").empty();
-        
+
         var input_intro = $('<textarea class="form-control" rows="3" id="edit_intro"></textarea>').val(current_intro);
         $("#editintroducted").html(input_intro);
 
@@ -297,7 +412,19 @@ $(function() {
                 $("#editintroducted").empty();
                 $("#editintroducted").html(new_intro);
                 //Cập nhật cơ sở dữ liệu
-
+                $.ajax({
+                    type: 'POST',
+                    url: "updateIntro",
+                    dataType: 'text/html',
+                    data: {
+                        new_intro: new_intro
+                    },
+                    success: function(data, textStatus, jqXHR) {
+                        if (data) {
+                            alert("Không thể cập nhật tên!");
+                        }
+                    }
+                });
             }
         });
     });
@@ -306,7 +433,7 @@ $(function() {
 
         var current_intro = $("#edithobby").text().trim();
         $("#edithobby").empty();
-        
+
         var input_intro = $('<textarea class="form-control" rows="3" id="edit_hobby"></textarea>').val(current_intro);
         $("#edithobby").html(input_intro);
 
@@ -319,7 +446,19 @@ $(function() {
                 $("#edithobby").empty();
                 $("#edithobby").html(new_intro);
                 //Cập nhật cơ sở dữ liệu
-                
+                $.ajax({
+                    type: 'POST',
+                    url: "updateHobby",
+                    dataType: 'text/html',
+                    data: {
+                        new_hobby: new_intro
+                    },
+                    success: function(data, textStatus, jqXHR) {
+                        if (data) {
+                            alert("Không thể cập nhật tên!");
+                        }
+                    }
+                });
             }
         });
     });

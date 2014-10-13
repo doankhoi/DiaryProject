@@ -29,6 +29,10 @@ class User extends AppModel{
             'className'=>'Comment',
             'foreignKey'=>'users_id',
             'condition'=>array('Comment.users_id'=>'User.id')
+        ),
+        'UsersLike'=>array(
+            'className'=>'UsersLike',
+            'foreignKey'=>'users_id'
         )
     );
     
