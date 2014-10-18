@@ -32,7 +32,7 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
     public $components = array('Session', 'Auth', 'RequestHandler');
-    public $helpers = array('Session', 'Js');
+    public $helpers = array('Session', 'Js', 'Paginator');
     
     public function beforeFilter() {
         Security::setHash('md5');

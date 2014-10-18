@@ -71,4 +71,78 @@ $(function() {
         }
     });
 
+    //Gợi ý người dùng tìm bài viết
+
+    $("#search").focus(function() {
+        //Lấy đữ liệu các bài viết về
+        $.ajax({
+            type: 'POST',
+            url: "users/getAllArticlesUsers",
+            dataType: 'json',
+            data: {
+            },
+            success: function(data, textStatus, jqXHR) {
+                if (data) {
+
+                    var arr = new Array();
+                    var k = 0;
+                    for (var i in data) {
+                        for (var j in data[i]) {
+                            if (j == 'Article') {
+                                arr[k++] = data[i][j].title;
+                                break;
+                            }
+                        }
+                    }
+
+                    $("#search").autocomplete({
+                        source: arr
+                    });
+                }
+            }
+        });
+    });
+
+    //Gọi tìm kiếm bài viết
+    $("#bt_search").click(function() {
+        var key = $("#search").val();
+        $.ajax({
+            type: 'POST',
+            url: "articles/search",
+            dataType: 'json',
+            data: {
+                key: key
+            },
+            success: function(data, textStatus, jqXHR) {
+                if (data) {
+                    $("#wrap_content").empty();
+                    displayResult(data);
+                }
+            }
+        });
+    });
+
+    function displayResult(data) {
+        var isData = false;
+        var key = $("#search").val();
+        if (jQuery.isEmptyObject(data)) {
+            $("#wrap_content").html("<h3 style='color:red'>Không có kết quả nào với từ khóa \"" + key + "\"</3>");
+            return;
+        }
+        var text = '';
+        var num = 0;
+        for (var item in data) {
+            text = '<div class="row">' +
+                    '<a href="/DiaryProject/articles/view/' + data[item]['id'] + '"><h2>' + data[item]['title'] + '</h2></a>' +
+                    '<p>' + data[item]['content'] + '</p>' +
+                    '</div>';
+            $("#wrap_content").append(text);
+            num++;
+        }
+        
+        $("#wrap_content").prepend("<h3> Có "+num+" kết quả được tìm thấy</h3>");        
+       
+    }
 });
+
+

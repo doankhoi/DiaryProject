@@ -16,7 +16,7 @@ App::uses('CakeEmail', 'Network/Email');
 class UsersController extends AppController {
 
     var $name = "Users";
-    public $uses = array('Profile', 'User', 'Invitation', 'Comment', 'UsersLike');
+    public $uses = array('Profile', 'User', 'Invitation', 'Comment', 'UsersLike', 'Article','Privilege','Subject');
 
     public function beforeFilter() {
         parent::beforeFilter();
@@ -490,4 +490,18 @@ class UsersController extends AppController {
         return;
     }
     
+    public function getAllArticlesUsers(){
+        $this->autoRender = FALSE;
+        $this->request->onlyAllow('ajax');
+        $id = $this->Auth->user('id');
+        
+        $articles = $this->Article->find('all', array(
+            'fields'=> array('Article.id','Article.title'),
+            'conditions'=>array(
+                'Article.users_id'=>$id
+            )
+        ));
+        
+        return json_encode($articles);
+    }
 }
