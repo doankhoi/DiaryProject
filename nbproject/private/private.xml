@@ -2,13 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/xampp/htdocs/DiaryProject/app/View/Articles/search.ctp</file>
-            <file>file:/C:/xampp/htdocs/DiaryProject/app/webroot/css/user_page.css</file>
-            <file>file:/C:/xampp/htdocs/DiaryProject/app/webroot/js/user_page.js</file>
-            <file>file:/C:/xampp/htdocs/DiaryProject/app/Controller/ArticlesController.php</file>
-            <file>file:/C:/xampp/htdocs/DiaryProject/app/Controller/UsersController.php</file>
-            <file>file:/C:/xampp/htdocs/DiaryProject/app/View/Layouts/user_page.ctp</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

@@ -11,6 +11,7 @@
  *
  * @author doankhoi
  */
-class Privilege {
+class Privilege extends AppModel{
     //put your code here
+    var $name="Privilege";
 }

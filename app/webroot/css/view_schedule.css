@@ -1,0 +1,23 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 25, 2014, 9:58:11 PM
+    Author     : doankhoi
+*/
+
+.img-schedule{
+    height: 30px;
+    width: 30px;
+}
+
+.title-schedule{
+    color: #006666;
+    font-size: 20px;
+}
+.date-schedule{
+    font-family: inherit;
+    font-size: 11px;
+}

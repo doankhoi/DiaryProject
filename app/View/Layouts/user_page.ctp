@@ -19,6 +19,8 @@ Trang cá nhân của người dùng sau khi đăng nhập vào hệ thống
         <?php echo $this->Html->script('bootstrap.min'); ?>
 
         <!-- Chèn javascipt-->
+
+        <?php echo $this->Html->script('tinymce/tinymce.min'); ?>
         <?php echo $this->Html->script('user_page'); ?>
 
         <?php echo $this->Js->writeBuffer(array('cache' => true)); ?>
@@ -52,29 +54,23 @@ Trang cá nhân của người dùng sau khi đăng nhập vào hệ thống
                     ?>
                 </div>
                 <div class="navbar-collapse collapse navbar-inverse-collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="#">Lịch làm việc</a></li>
+                    <ul class="nav navbar-nav">                       
                         <li><a href="#">Tìm bạn bè</a></li>
 
                     </ul>
                     <form class="navbar-form navbar-left">
                         <input id="search" type="text" class="form-control col-lg-8" placeholder="Tìm bài viết"> 
                         <?php
-                           
-                                echo  $this->Html->tag(
-                                            'span', 
-                                            $this->Html->tag(
-                                                    'span',
-                                                    '', 
-                                                    array(
-                                                        'class'=>'glyphicon glyphicon-search'
-                                                    )
-                                            ),
-                                            array(
-                                                'id'=>'bt_search',
-                                                'class'=>'btn btn-default'
-                                            )
-                                    );
+                        echo $this->Html->tag(
+                                'span', $this->Html->tag(
+                                        'span', '', array(
+                                    'class' => 'glyphicon glyphicon-search'
+                                        )
+                                ), array(
+                            'id' => 'bt_search',
+                            'class' => 'btn btn-default'
+                                )
+                        );
                         ?>
                         <!--<a href="#"><button id="bt_search" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> </button></a>--> 
                     </form>
@@ -83,15 +79,15 @@ Trang cá nhân của người dùng sau khi đăng nhập vào hệ thống
 
                         <!-- Liên kết tới trang profile của người dùng -->
                         <li>
-                            <?php
-                            echo $this->Html->link($userId['username'], array(
-                                'controller' => 'users',
-                                'action' => 'viewprofile',
-                                    ), array(
-                                'title' => 'Profile'
-                                    )
-                            );
-                            ?>
+<?php
+echo $this->Html->link($userId['username'], array(
+    'controller' => 'users',
+    'action' => 'viewprofile',
+        ), array(
+    'title' => 'Profile'
+        )
+);
+?>
 
                         </li>
 
@@ -133,170 +129,170 @@ Trang cá nhân của người dùng sau khi đăng nhập vào hệ thống
             <div id="notify-container" style="display: none">
                 <div class="list-group notify">
 
-                    <?php
-                    //Lấy tất cả các comment chưa đọc
-                    $commentNotRead = $this->requestAction(array(
-                        'controller' => 'Comments',
-                        'action' => 'getAllCommentNotRead'
-                    ));
+<?php
+//Lấy tất cả các comment chưa đọc
+$commentNotRead = $this->requestAction(array(
+    'controller' => 'Comments',
+    'action' => 'getAllCommentNotRead'
+        ));
 
-                    //Lấy tất cả các lời mời chưa đọc
-                    $invitationNotRead = $this->requestAction(array(
-                        'controller' => 'Invitations',
-                        'action' => 'getAllInvitationNotRead'
-                    ));
+//Lấy tất cả các lời mời chưa đọc
+$invitationNotRead = $this->requestAction(array(
+    'controller' => 'Invitations',
+    'action' => 'getAllInvitationNotRead'
+        ));
 
-                    //Lấy tất cả sự kiện like người dùng với bài viết người dùng hiện tại
-                    $likeNotRead = $this->requestAction(array(
-                        'controller' => 'UsersLikes',
-                        'action' => 'getAllLikeNotRead'
-                    ));
+//Lấy tất cả sự kiện like người dùng với bài viết người dùng hiện tại
+$likeNotRead = $this->requestAction(array(
+    'controller' => 'UsersLikes',
+    'action' => 'getAllLikeNotRead'
+        ));
 
-                    //Hiển thị các thông báo comments
-                    if (count($commentNotRead) > 0) {
-                        foreach ($commentNotRead as $item) {
-                            $title_article = $this->requestAction(
-                                    array(
-                                        'controller' => 'Articles',
-                                        'action' => 'getTitle',
-                                        $item['tb_comments']['articles_id']
-                                    )
-                            );
-                            $user_avatar_comment = $this->requestAction(array(
-                                'controller' => 'Profiles',
-                                'action' => 'getProfileById',
-                                $item['tb_comments']['users_id']
-                            ));
-                            $username_comment = $this->requestAction(array(
-                                'controller' => 'Users',
-                                'action' => 'getUsername',
-                                $item['tb_comments']['users_id']
-                            ));
+//Hiển thị các thông báo comments
+if (count($commentNotRead) > 0) {
+    foreach ($commentNotRead as $item) {
+        $title_article = $this->requestAction(
+                array(
+                    'controller' => 'Articles',
+                    'action' => 'getTitle',
+                    $item['tb_comments']['articles_id']
+                )
+        );
+        $user_avatar_comment = $this->requestAction(array(
+            'controller' => 'Profiles',
+            'action' => 'getProfileById',
+            $item['tb_comments']['users_id']
+        ));
+        $username_comment = $this->requestAction(array(
+            'controller' => 'Users',
+            'action' => 'getUsername',
+            $item['tb_comments']['users_id']
+        ));
 
-                            //Hiển thị thông báo
-                            echo $this->Html->link(
-                                    $this->Html->tag(
-                                            'div', $this->Html->tag(
-                                                    'div', $this->Html->image($user_avatar_comment['Profile']['avatar']), array(
-                                                'class' => 'col-lg-2'
-                                            )) .
-                                            $this->Html->tag(
-                                                    'div', $this->Html->tag(
-                                                            'p', "<b>" . $username_comment . "</b> đã bình luận về bài viết <b>" . $title_article['Article']['title'] . "</b> của bạn", array(
-                                                        'class' => 'list-group-item-text'
-                                                    )), array(
-                                                'class' => 'col-lg-10'
-                                            )), array('class' => 'row')
-                                    ), array(
-                                'controller' => 'Articles',
-                                'action' => 'view',
-                                $item['tb_comments']['articles_id']
-                                    ), array(
-                                'class' => 'list-group-item readcomment',
-                                'users_id' => $item['tb_comments']['users_id'],
-                                'articles_id' => $item['tb_comments']['articles_id'],
-                                'escape' => false
-                                    )
-                            );
-                        }
-                    }//End hiển thị thông báo comments
-                    //Hiển thị thông báo các lời mời
-                    if (count($invitationNotRead) > 0) {
-                        foreach ($invitationNotRead as $item) {
-                            $title_article = $this->requestAction(
-                                    array(
-                                        'controller' => 'Articles',
-                                        'action' => 'getTitle',
-                                        $item['articles_id']
-                                    )
-                            );
-                            $user_avatar_comment = $this->requestAction(array(
-                                'controller' => 'Profiles',
-                                'action' => 'getProfileById',
-                                $item['users_id']
-                            ));
-                            $username_comment = $this->requestAction(array(
-                                'controller' => 'Users',
-                                'action' => 'getUsername',
-                                $item['users_id']
-                            ));
+        //Hiển thị thông báo
+        echo $this->Html->link(
+                $this->Html->tag(
+                        'div', $this->Html->tag(
+                                'div', $this->Html->image($user_avatar_comment['Profile']['avatar']), array(
+                            'class' => 'col-lg-2'
+                        )) .
+                        $this->Html->tag(
+                                'div', $this->Html->tag(
+                                        'p', "<b>" . $username_comment . "</b> đã bình luận về bài viết <b>" . $title_article['Article']['title'] . "</b> của bạn", array(
+                                    'class' => 'list-group-item-text'
+                                )), array(
+                            'class' => 'col-lg-10'
+                        )), array('class' => 'row')
+                ), array(
+            'controller' => 'Articles',
+            'action' => 'view',
+            $item['tb_comments']['articles_id']
+                ), array(
+            'class' => 'list-group-item readcomment',
+            'users_id' => $item['tb_comments']['users_id'],
+            'articles_id' => $item['tb_comments']['articles_id'],
+            'escape' => false
+                )
+        );
+    }
+}//End hiển thị thông báo comments
+//Hiển thị thông báo các lời mời
+if (count($invitationNotRead) > 0) {
+    foreach ($invitationNotRead as $item) {
+        $title_article = $this->requestAction(
+                array(
+                    'controller' => 'Articles',
+                    'action' => 'getTitle',
+                    $item['articles_id']
+                )
+        );
+        $user_avatar_comment = $this->requestAction(array(
+            'controller' => 'Profiles',
+            'action' => 'getProfileById',
+            $item['users_id']
+        ));
+        $username_comment = $this->requestAction(array(
+            'controller' => 'Users',
+            'action' => 'getUsername',
+            $item['users_id']
+        ));
 
-                            //Hiển thị thông báo
-                            echo $this->Html->link(
-                                    $this->Html->tag(
-                                            'div', $this->Html->tag(
-                                                    'div', $this->Html->image($user_avatar_comment['Profile']['avatar']), array(
-                                                'class' => 'col-lg-2'
-                                            )) .
-                                            $this->Html->tag(
-                                                    'div', $this->Html->tag(
-                                                            'p', "<b>" . $username_comment . "</b> đã mời bạn tham gia bài viết <b>" . $title_article['Article']['title'] . "</b>", array(
-                                                        'class' => 'list-group-item-text'
-                                                    )), array(
-                                                'class' => 'col-lg-10'
-                                            )), array('class' => 'row')
-                                    ), array(
-                                'controller' => 'Articles',
-                                'action' => 'view',
-                                $item['tb_comments']['articles_id']
-                                    ), array(
-                                'class' => 'list-group-item readinvite',
-                                'articles_id' => $item['articles_id'],
-                                'users_id' => $userId['id'],
-                                'escape' => false
-                                    )
-                            );
-                        }
-                    }//End mời
+        //Hiển thị thông báo
+        echo $this->Html->link(
+                $this->Html->tag(
+                        'div', $this->Html->tag(
+                                'div', $this->Html->image($user_avatar_comment['Profile']['avatar']), array(
+                            'class' => 'col-lg-2'
+                        )) .
+                        $this->Html->tag(
+                                'div', $this->Html->tag(
+                                        'p', "<b>" . $username_comment . "</b> đã mời bạn tham gia bài viết <b>" . $title_article['Article']['title'] . "</b>", array(
+                                    'class' => 'list-group-item-text'
+                                )), array(
+                            'class' => 'col-lg-10'
+                        )), array('class' => 'row')
+                ), array(
+            'controller' => 'Articles',
+            'action' => 'view',
+            $item['tb_comments']['articles_id']
+                ), array(
+            'class' => 'list-group-item readinvite',
+            'articles_id' => $item['articles_id'],
+            'users_id' => $userId['id'],
+            'escape' => false
+                )
+        );
+    }
+}//End mời
 
-                    if (count($likeNotRead) > 0) {
-                        foreach ($likeNotRead as $item) {
-                            $title_article = $this->requestAction(
-                                    array(
-                                        'controller' => 'Articles',
-                                        'action' => 'getTitle',
-                                        $item['articles_id']
-                                    )
-                            );
-                            $user_avatar_comment = $this->requestAction(array(
-                                'controller' => 'Profiles',
-                                'action' => 'getProfileById',
-                                $item['users_id']
-                            ));
-                            $username_comment = $this->requestAction(array(
-                                'controller' => 'Users',
-                                'action' => 'getUsername',
-                                $item['users_id']
-                            ));
+if (count($likeNotRead) > 0) {
+    foreach ($likeNotRead as $item) {
+        $title_article = $this->requestAction(
+                array(
+                    'controller' => 'Articles',
+                    'action' => 'getTitle',
+                    $item['articles_id']
+                )
+        );
+        $user_avatar_comment = $this->requestAction(array(
+            'controller' => 'Profiles',
+            'action' => 'getProfileById',
+            $item['users_id']
+        ));
+        $username_comment = $this->requestAction(array(
+            'controller' => 'Users',
+            'action' => 'getUsername',
+            $item['users_id']
+        ));
 
-                            //Hiển thị thông báo
-                            echo $this->Html->link(
-                                    $this->Html->tag(
-                                            'div', $this->Html->tag(
-                                                    'div', $this->Html->image($user_avatar_comment['Profile']['avatar']), array(
-                                                'class' => 'col-lg-2'
-                                            )) .
-                                            $this->Html->tag(
-                                                    'div', $this->Html->tag(
-                                                            'p', "<b>" . $username_comment . "</b> thích bài viết <b>" . $title_article['Article']['title'] . "</b> của bạn", array(
-                                                        'class' => 'list-group-item-text'
-                                                    )), array(
-                                                'class' => 'col-lg-10'
-                                            )), array('class' => 'row')
-                                    ), array(
-                                'controller' => 'Articles',
-                                'action' => 'view',
-                                $item['tb_comments']['articles_id']
-                                    ), array(
-                                'class' => 'list-group-item readlike',
-                                'articles_id' => $item['articles_id'],
-                                'users_id' => $item['users_id'],
-                                'escape' => false
-                                    )
-                            );
-                        }
-                    }
-                    ?>
+        //Hiển thị thông báo
+        echo $this->Html->link(
+                $this->Html->tag(
+                        'div', $this->Html->tag(
+                                'div', $this->Html->image($user_avatar_comment['Profile']['avatar']), array(
+                            'class' => 'col-lg-2'
+                        )) .
+                        $this->Html->tag(
+                                'div', $this->Html->tag(
+                                        'p', "<b>" . $username_comment . "</b> thích bài viết <b>" . $title_article['Article']['title'] . "</b> của bạn", array(
+                                    'class' => 'list-group-item-text'
+                                )), array(
+                            'class' => 'col-lg-10'
+                        )), array('class' => 'row')
+                ), array(
+            'controller' => 'Articles',
+            'action' => 'view',
+            $item['tb_comments']['articles_id']
+                ), array(
+            'class' => 'list-group-item readlike',
+            'articles_id' => $item['articles_id'],
+            'users_id' => $item['users_id'],
+            'escape' => false
+                )
+        );
+    }
+}
+?>
 
                 </div>
             </div> <!--End showmessage-->
@@ -384,39 +380,39 @@ Trang cá nhân của người dùng sau khi đăng nhập vào hệ thống
                         <a href="#" class="list-group-item item-friend">
                             <div class="row">
                                 <div class="col-lg-2">
-                                    <?php echo $this->Html->image('doankhoi.jpg', array('class' => 'icon_friend')); ?>
+<?php echo $this->Html->image('doankhoi.jpg', array('class' => 'icon_friend')); ?>
                                 </div>
                                 <div class="col-lg-8">
                                     <p class="list-group-item-text item-friend-name">duccuong</p>
                                 </div>
                                 <div class="col-lg-1">
-                                    <?php echo $this->Html->image('online.jpg', array('class' => 'icon_status navbar-right')); ?>
+<?php echo $this->Html->image('online.jpg', array('class' => 'icon_status navbar-right')); ?>
                                 </div>
                             </div>
                         </a>               
                         <a href="#" class="list-group-item item-friend">
                             <div class="row">
                                 <div class="col-lg-2">
-                                    <?php echo $this->Html->image('doankhoi.jpg', array('class' => 'icon_friend')); ?>
+<?php echo $this->Html->image('doankhoi.jpg', array('class' => 'icon_friend')); ?>
                                 </div>
                                 <div class="col-lg-8">
                                     <p class="list-group-item-text item-friend-name">duccuong</p>
                                 </div>
                                 <div class="col-lg-1">
-                                    <?php echo $this->Html->image('offline.jpg', array('class' => 'icon_status navbar-right')); ?>
+<?php echo $this->Html->image('offline.jpg', array('class' => 'icon_status navbar-right')); ?>
                                 </div>
                             </div>
                         </a>               
                         <a href="#" class="list-group-item item-friend">
                             <div class="row">
                                 <div class="col-lg-2">
-                                    <?php echo $this->Html->image('doankhoi.jpg', array('class' => 'icon_friend')); ?>
+<?php echo $this->Html->image('doankhoi.jpg', array('class' => 'icon_friend')); ?>
                                 </div>
                                 <div class="col-lg-8">
                                     <p class="list-group-item-text item-friend-name">duccuong</p>
                                 </div>
                                 <div class="col-lg-1">
-                                    <?php echo $this->Html->image('online.jpg', array('class' => 'icon_status navbar-right')); ?>
+<?php echo $this->Html->image('online.jpg', array('class' => 'icon_status navbar-right')); ?>
                                 </div>
                             </div>
                         </a>               
@@ -437,187 +433,92 @@ Trang cá nhân của người dùng sau khi đăng nhập vào hệ thống
 
                 <!--Nội dung chính -->
                 <div id="wrap_content" class="col-lg-6">
-                    <?php echo $this->fetch('content'); ?>
-                    
-                    <div id="loading">
-                                Đang tìm kiếm ...
-                    </div> 
+<?php echo $this->fetch('content'); ?>
+
                 </div> <!--Nội dung chính-->
-                
-                         
+
+
                 <!--Hoạt động gần nhất-->
                 <div class="col-lg-3">
                     <div class="row title_nav_left">
-                        Lịch làm việc
+                        <div class="col-lg-9">
+                            <?php echo $this->Html->link('Lịch làm việc', array('controller' => 'Schedules', 'action' => 'index')); ?>
+                        </div>
+                        <div class="col-lg-3">
+
+                        <?php
+                            echo $this->Html->link(
+                                    $this->Html->image('schedule_add.jpg'), array(
+                                'controller' => 'Schedules',
+                                'action' => 'add'
+                                    ), array(
+                                'class' => 'btn btn-default btn-lg btn-block',
+                                'id' => 'bt-schedule-add',
+                                'title' => 'Thêm lịch mới',
+                                'escape' => FALSE
+                            ));
+                        ?>
+                        </div>
+                            
                     </div>
                     <!--Danh sách lịch làm việc-->
                     <div class="list-group recent">
 
-                        <a href="#" class="list-group-item">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <?php echo $this->Html->image('schule.jpg'); ?>
-                                </div>
-                                <div class="col-lg-9">
-                                    <h5 class="list-group-item-heading">List group item heading</h5>
-                                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <?php echo $this->Html->image('schule.jpg'); ?>
-                                </div>
-                                <div class="col-lg-9">
-                                    <h5 class="list-group-item-heading">List group item heading</h5>
-                                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <?php echo $this->Html->image('schule.jpg'); ?>
-                                </div>
-                                <div class="col-lg-9">
-                                    <h5 class="list-group-item-heading">List group item heading</h5>
-                                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <?php echo $this->Html->image('schule.jpg'); ?>
-                                </div>
-                                <div class="col-lg-9">
-                                    <h5 class="list-group-item-heading">List group item heading</h5>
-                                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                </div>
-                            </div>
-                        </a>
+<?php
+$schedules = $this->requestAction(array('controller' => 'Schedules', 'action' => 'getSchedulesImp'));
+foreach ($schedules as $schedule) {
+
+    $today = date(time());
+    $schedule_time = strtotime($schedule['Schedule']['time']);
+    echo date('d/m/Y', $schedule_time);
+    $path_image = "schedule_done.jpg";
+
+    if ($today < $schedule_time) {
+        $path_image = "schedule_imp.jpg";
+    }
+    echo $this->Html->link(
+            $this->Html->tag(
+                    'div', $this->Html->tag(
+                            'div', $this->Html->image($path_image, array('class' => 'icon_schedule')), array(
+                        'class' => 'col-lg-3',
+                            )
+                    ) .
+                    $this->Html->tag(
+                            'div', $schedule['Schedule']['title'], array(
+                        'class' => 'col-lg-9'
+                            )
+                    ), array(
+                'class' => 'row'
+                    )
+            ), array(
+        'controller' => 'Schedules',
+        'action' => 'view',
+        $schedule['Schedule']['id']
+            ), array(
+        'class' => 'list-group-item',
+        'escape' => false
+            )
+    );
+}
+?>
 
                     </div><!--End danh sách lịch làm việc-->
 
-                    <div class="row title_nav_left">
-                        Recent
-                    </div>               
-                    <div class="list-group recent">
 
-                        <a href="#" class="list-group-item">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <?php echo $this->Html->image('doankhoi.jpg'); ?>
-                                </div>
-                                <div class="col-lg-9">
-                                    <h5 class="list-group-item-heading">List group item heading</h5>
-                                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                </div>
-                            </div>
-
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <?php echo $this->Html->image('doankhoi.jpg'); ?>
-                                </div>
-                                <div class="col-lg-9">
-                                    <h5 class="list-group-item-heading">List group item heading</h5>
-                                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                </div>
-                            </div>
-
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <?php echo $this->Html->image('doankhoi.jpg'); ?>
-                                </div>
-                                <div class="col-lg-9">
-                                    <h5 class="list-group-item-heading">List group item heading</h5>
-                                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                </div>
-                            </div>
-
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <?php echo $this->Html->image('doankhoi.jpg'); ?>
-                                </div>
-                                <div class="col-lg-9">
-                                    <h5 class="list-group-item-heading">List group item heading</h5>
-                                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                </div>
-                            </div>
-
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <?php echo $this->Html->image('doankhoi.jpg'); ?>
-                                </div>
-                                <div class="col-lg-9">
-                                    <h5 class="list-group-item-heading">List group item heading</h5>
-                                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                </div>
-                            </div>
-
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <?php echo $this->Html->image('doankhoi.jpg'); ?>
-                                </div>
-                                <div class="col-lg-9">
-                                    <h5 class="list-group-item-heading">List group item heading</h5>
-                                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                </div>
-                            </div>
-
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <?php echo $this->Html->image('doankhoi.jpg'); ?>
-                                </div>
-                                <div class="col-lg-9">
-                                    <h5 class="list-group-item-heading">List group item heading</h5>
-                                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                </div>
-                            </div>
-
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <?php echo $this->Html->image('doankhoi.jpg'); ?>
-                                </div>
-                                <div class="col-lg-9">
-                                    <h5 class="list-group-item-heading">List group item heading</h5>
-                                    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                </div>
-                            </div>
-
-                        </a>
-
-
-                    </div>
                 </div><!--Hoat động gần nhất-->
 
             </div><!--End row-->
 
             <!--Footer -->
-            <?php
-            echo $this->element('footer');
-            ?>
+                        <?php
+                        echo $this->element('footer');
+                        ?>
         </div><!--End wrapper-->
 
-        <?php
-        echo $this->Html->script('jquery-ui.min');
-        echo $this->Html->css('jquery-ui.min');
-        echo $this->Html->css('user_page');
-        ?>
+                        <?php
+                        echo $this->Html->script('jquery-ui.min');
+                        echo $this->Html->css('jquery-ui.min');
+                        echo $this->Html->css('user_page');
+                        ?>
     </body>
 </html>

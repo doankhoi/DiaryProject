@@ -103,6 +103,7 @@ body{
 #search{
     border-right: none;
     height: 30px;
+    width: 400px;
 }
 
 //Style loading
@@ -120,4 +121,20 @@ body{
     opacity: 0.7;
     border-radius: 5px;
     display: none;
+}
+
+.icon_schedule{
+    width: 30px !important;
+    height: 30px !important;
+}
+
+#bt-schedule-add{
+    background: white;
+    border: none;
+}
+
+#bt-schedule-add img{
+    width: 30px !important;
+    height: 30px !important;
+   
 }

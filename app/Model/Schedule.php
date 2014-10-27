@@ -11,7 +11,16 @@
  *
  * @author doankhoi
  */
-class Schedule {
+class Schedule extends AppModel{
     var $name = "Schedule";
     
+    var $validate = array(
+        'title' => array('title_must_not_be_blank' => array(
+                'rule' => 'notEmpty',
+                'message' => 'Nhập vào tiêu đề'),
+        ),
+        'notes'=>array('notes_must_not_be_blank' => array(
+                'rule' => 'notEmpty',
+                'message' => 'Nhập vào nội dung'),
+    ));
 }

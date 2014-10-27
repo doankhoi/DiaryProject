@@ -126,21 +126,25 @@ $(function() {
         var isData = false;
         var key = $("#search").val();
         if (jQuery.isEmptyObject(data)) {
-            $("#wrap_content").html("<h3 style='color:red'>Không có kết quả nào với từ khóa \"" + key + "\"</3>");
+            $("#wrap_content").html("<div class=\"alert alert-dismissable alert-danger\">"+
+                                        "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>"+
+                                        "<strong>Không có kết quả nào với từ khóa \""+ key+"\"</strong></div>");
             return;
         }
         var text = '';
         var num = 0;
         for (var item in data) {
             text = '<div class="row">' +
-                    '<a href="/DiaryProject/articles/view/' + data[item]['id'] + '"><h2>' + data[item]['title'] + '</h2></a>' +
+                    '<a href="/DiaryProject/articles/view/' + data[item]['id'] + '"><h4>' + data[item]['title'] + '</h4></a>' +
                     '<p>' + data[item]['content'] + '</p>' +
-                    '</div>';
+                    '</div> <hr/>';
             $("#wrap_content").append(text);
             num++;
         }
         
-        $("#wrap_content").prepend("<h3> Có "+num+" kết quả được tìm thấy</h3>");        
+        $("#wrap_content").prepend("<div class=\"alert alert-dismissable alert-success\">"+
+                                        "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>"+
+                                        "<strong>Có "+ num+" kết quả được tìm thấy.</strong></div>");        
        
     }
 });
