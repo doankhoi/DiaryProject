@@ -61,5 +61,17 @@ class SchedulesController  extends AppController{
     
     public function add(){
         $this->layout= 'user_page';
+        $this->set('title_for_layout', 'Thêm lịch trình');
+        
+        if(!empty($this->request->data)){
+            $id = $this->Auth->user('id');
+            $this->request->data['Schedule']['users_id']= $id;
+            $this->request->data['Schedule']['created'] = date('Y-m-d H:i:s');
+            $this->request->data['Schedule']['priority'] =  $this->request->data['Schedule']['priority'][0];
+            if($this->Schedule->saveAssociated($this->request->data, array('deep' => true))){
+                $this->redirect('index');
+            }
+        }
+        
     }
 }

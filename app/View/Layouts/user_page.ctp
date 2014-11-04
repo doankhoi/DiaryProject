@@ -470,7 +470,7 @@ foreach ($schedules as $schedule) {
 
     $today = date(time());
     $schedule_time = strtotime($schedule['Schedule']['time']);
-    echo date('d/m/Y', $schedule_time);
+    echo date('d/m/Y H:i:s', $schedule_time);
     $path_image = "schedule_done.jpg";
 
     if ($today < $schedule_time) {

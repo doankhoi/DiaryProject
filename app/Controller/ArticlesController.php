@@ -122,4 +122,18 @@ class ArticlesController extends AppController {
         return implode(' ', array_slice($result, 0, 300));
     }
 
+    //Đếm danh sách các bài viết theo tháng
+    public function countArticleWithMonth(){
+        $id = $this->Auth->user('id');
+        
+        $articles = $this->Article->find('all',array(
+           'conditions'=> array(
+               'users_id'=>$id              
+           ),
+            'order'=>'Article.created desc',
+            'group'=> array('Article.subjects_id')
+        ));
+        
+        return $articles;
+    }
 }

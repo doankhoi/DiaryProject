@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<span class="date-schedule"> Thời gian xảy ra: <?php echo date('d/m/Y', $schedule_time); ?></span><br>
+<span class="date-schedule"> Thời gian xảy ra: <?php echo date('d/m/Y H:i:s', $schedule_time); ?></span><br>
 <span class="date-schedule">Mức ưu tiên: 
     <?php 
         if($priority==0){

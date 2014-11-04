@@ -138,3 +138,11 @@ body{
     height: 30px !important;
    
 }
+
+#bt-add-schedule input{
+    background-color: #008cba;
+    color: white;
+    font-weight: bold;
+    margin-left: 37em;
+}
+

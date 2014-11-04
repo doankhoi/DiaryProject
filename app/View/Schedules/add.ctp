@@ -1,8 +1,9 @@
 <?php echo $this->Html->script('add_schedule');?>
-<div>
+<div id="form-add-schedule">
     
     <?php 
-        echo $this->Form->create('Schedule', array('class'=>'form-horizontal'));
+        echo $this->Form->create('Schedule',array('class'=>'form-horizontal'));
+        $arr_priority = array(0=>'Cao nhất', 1=>'Trung bình', 2=>'Thấp nhất');
     ?>
     <fieldset>
         <legend>Thêm lịch làm việc mới</legend>
@@ -29,46 +30,35 @@
                     ?>                   
                     <span class="help-block">Miêu tả chi tiết lịch trình của bạn.</span>
                 </div>
-        </div>   
-     </fieldset>
-    
-        <?php
-        echo $this->Form->end('Hoàn tất', array('class'=>'btn btn-primary'));
-    ?>
-    
-<!--    <form class="form-horizontal">
-        <fieldset>
-            <legend>Thêm lịch làm việc mới</legend>
-            <div class="form-group">
-                <label for="scheduleTitle" class="col-lg-2 control-label">Tiêu đề</label>
-                <div class="col-lg-10">
-                    <input type="text" class="form-control" id="scheduleTitle" placeholder="Tiêu đề">
-                </div>
-            </div>          
-            <div class="form-group">
-                <label for="scheduleNotes" class="col-lg-2 control-label">Nội dung</label>
-                <div class="col-lg-10">
-                    <textarea class="form-control" rows="3" id="scheduleNotes"></textarea>
-                    <span class="help-block">Miêu tả chi tiết lịch trình của bạn.</span>
-                </div>
-            </div>          
-            <div class="form-group">
+        </div>
+        
+        <div class="form-group">
                 <label for="schedulePriority" class="col-lg-2 control-label">Mức ưu tiên</label>
                 <div class="col-lg-10">
-                    <select class="form-control" id="schedulePriority">
-                        <option>Cao nhất</option>
-                        <option>Trung bình</option>
-                        <option>Thấp</option>                        
-                    </select>
+                    <?php echo $this->Form->input('Schedule.priority', array('id'=>'schedulePriority','label'=>FALSE,'multiple' => 'combobox', 'options' => $arr_priority));?>
                     <br>                   
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-lg-10 col-lg-offset-2">
-                    <button class="btn btn-default">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Hoàn tất</button>
+        </div>
+        <div class="form-group">
+                <label for="scheduleTime" class="col-lg-2 control-label">Thời gian</label>
+                <div class="col-lg-10">
+                    <?php echo $this->Form->input(
+                            'Schedule.time', array(
+                                'id'=>'scheduleTime',
+                                'label'=>FALSE,
+                                'dateFormat' => 'DMY',
+                                'minYear' => date('Y') - 100,
+                                'maxYear' => date('Y') + 100
+                                ));
+                    ?>
+                    <br>                   
                 </div>
-            </div>
-        </fieldset>
-    </form>-->
+        </div>
+     </fieldset>
+    <div id="bt-add-schedule">
+        <?php
+        echo $this->Form->end('Hoàn tất');
+        ?>
+    </div>
+    
 </div>

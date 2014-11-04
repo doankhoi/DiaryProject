@@ -147,6 +147,8 @@ $(function() {
                                         "<strong>Có "+ num+" kết quả được tìm thấy.</strong></div>");        
        
     }
+    
+    //
 });
 
 
